@@ -80,15 +80,12 @@ public class Car {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Car car = (Car) o;
-        return Objects.equals(id, car.id) &&
-                Objects.equals(brand, car.brand) &&
-                Objects.equals(model, car.model) &&
-                Objects.equals(licensePlate, car.licensePlate) &&
-                Objects.equals(price, car.price);
+        return  Objects.equals(brand, car.brand) &&
+                Objects.equals(model, car.model);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, brand, model, licensePlate, price);
+        return Objects.hash(brand, model);
     }
 }

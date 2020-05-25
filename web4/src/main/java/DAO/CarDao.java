@@ -1,6 +1,9 @@
 package DAO;
 
+import model.Car;
 import org.hibernate.Session;
+
+import java.util.List;
 
 public class CarDao {
 
@@ -8,6 +11,10 @@ public class CarDao {
 
     public CarDao(Session session) {
         this.session = session;
+    }
+
+    public List<Car> getAllCars() {
+
     }
 
 }
