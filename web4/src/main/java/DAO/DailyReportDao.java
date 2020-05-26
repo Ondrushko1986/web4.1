@@ -21,4 +21,24 @@ public class DailyReportDao {
         session.close();
         return dailyReports;
     }
+
+    public DailyReport getLastReport() {
+        List<DailyReport> allDailyReport = getAllDailyReport();
+        return allDailyReport.get(allDailyReport.size() - 1);
+    }
+
+    public void addDailyReport (DailyReport dailyReport) {
+        Transaction transaction = session.getTransaction();
+        session.save(dailyReport);
+        transaction.commit();
+        session.close();
+    }
+
+    public void delete () {
+        session.beginTransaction();
+        session.createQuery("DELETE from DailyReport").executeUpdate();
+        session.getTransaction().commit();
+        session.close();
+    }
+
 }
