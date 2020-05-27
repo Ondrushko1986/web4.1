@@ -59,6 +59,9 @@ public class CarDao {
         return result;
     }
 
+    public void delCar(Car car) {
+    }
+
 
 
 

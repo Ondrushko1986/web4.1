@@ -25,8 +25,14 @@ public class CustomerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String brand = req.getParameter("brand");
         String model = req.getParameter("model");
-        String licencePlate = req.getParameter("licencePlate");
+        String licensePlate = req.getParameter("licensePlate");
 
+        Car car = CarService.getInstance().buyCar(new Car(brand, model, licensePlate, 0L));
 
+        if (car != null) {
+            resp.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        }
     }
 }

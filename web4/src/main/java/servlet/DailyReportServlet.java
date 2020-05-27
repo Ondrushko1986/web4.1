@@ -1,5 +1,8 @@
 package servlet;
 
+import com.google.gson.Gson;
+import model.DailyReport;
+import service.CarService;
 import service.DailyReportService;
 
 import javax.servlet.ServletException;
@@ -12,15 +15,28 @@ public class DailyReportServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        Gson gson = new Gson();
+        String json = null;
+
         if (req.getPathInfo().contains("all")) {
             DailyReportService.getInstance().getAllDailyReports();
         } else if (req.getPathInfo().contains("last")) {
             DailyReportService.getInstance().getLastReport();
         }
+
+        resp.getWriter().println(json);
+        resp.setContentType("text/html;charset=utf-8");
+        resp.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
+        CarService.getInstance().delete();
+        DailyReport.getInstance().delete();
+        DailyReportService.getInstance().delete();
+
     }
+
+
 }

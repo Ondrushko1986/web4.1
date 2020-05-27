@@ -8,6 +8,15 @@ import javax.persistence.*;
 @Table(name = "daily_reports")
 public class DailyReport {
 
+    private static DailyReport dailyReport;
+
+    public static DailyReport getInstance() {
+        if (dailyReport == null) {
+            dailyReport = new DailyReport(0L, 0L);
+        }
+        return dailyReport;
+    }
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +57,11 @@ public class DailyReport {
         return soldCars;
     }
 
-    public void setSoldCars(Long soldCars) {
+    public void setSoldCars() {
         this.soldCars = soldCars;
+    }
+
+    public void delete() {
+        dailyReport = null;
     }
 }

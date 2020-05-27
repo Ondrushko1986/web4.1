@@ -2,6 +2,7 @@ package service;
 
 import DAO.CarDao;
 import model.Car;
+import model.DailyReport;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import util.DBHelper;
@@ -43,16 +44,24 @@ public class CarService {
         return false;
     }
 
-    public Car buyCar (Car car) {
-
-    }
-
     public int countOFCars (String brand) {
         return new CarDao(sessionFactory.openSession()).countOFCars("brand");
     }
 
     public void delete () {
         new CarDao(sessionFactory.openSession()).deleteAllCars();
+    }
+
+    public Car buyCar(Car car) {
+        for (Car carOfBrand : new CarDao(sessionFactory.openSession()).getAllCarOfBrand(car.getBrand())) {
+            if (carOfBrand.equals(car)) {
+                new CarDao(sessionFactory.openSession()).delCar(carOfBrand);
+                DailyReport.getInstance().setEarnings(carOfBrand.getPrice());
+                DailyReport.getInstance().setSoldCars();
+                return carOfBrand;
+            }
+        }
+        return null;
     }
 
 
