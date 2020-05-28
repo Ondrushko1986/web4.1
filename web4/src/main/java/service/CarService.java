@@ -4,11 +4,8 @@ import DAO.CarDao;
 import model.Car;
 import model.DailyReport;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import util.DBHelper;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CarService {
@@ -17,7 +14,7 @@ public class CarService {
 
     private SessionFactory sessionFactory;
 
-    private CarService(SessionFactory sessionFactory) {
+    public CarService(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
@@ -29,7 +26,7 @@ public class CarService {
     }
 
     public List<Car> getAllCars() {
-        return new CarDao(sessionFactory.openSession()).getAllCars();
+        return new CarDao(sessionFactory.openSession()).getAllCar();
     }
 
     public List<Car> getAllCarOfBrand(String brand) {
@@ -37,19 +34,11 @@ public class CarService {
     }
 
     public boolean addCar(Car car) {
-        if (countOFCars(car.getBrand()) <= 10) {
+        if (count(car.getBrand()) <= 10) {
             new CarDao(sessionFactory.openSession()).addCar(car);
             return true;
         }
         return false;
-    }
-
-    public int countOFCars (String brand) {
-        return new CarDao(sessionFactory.openSession()).countOFCars("brand");
-    }
-
-    public void delete () {
-        new CarDao(sessionFactory.openSession()).deleteAllCars();
     }
 
     public Car buyCar(Car car) {
@@ -64,5 +53,11 @@ public class CarService {
         return null;
     }
 
+    public int count(String brand) {
+        return new CarDao(sessionFactory.openSession()).count(brand);
+    }
 
+    public void delete() {
+        new CarDao(sessionFactory.openSession()).delete();
+    }
 }

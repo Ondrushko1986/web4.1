@@ -28,14 +28,14 @@ public class DailyReportDao {
     }
 
     public void addDailyReport (DailyReport dailyReport) {
-        Transaction transaction = session.getTransaction();
+        Transaction transaction = session.beginTransaction();
         session.save(dailyReport);
         transaction.commit();
         session.close();
     }
 
     public void delete () {
-        session.beginTransaction();
+        Transaction transaction = session.beginTransaction();
         session.createQuery("DELETE from DailyReport").executeUpdate();
         session.getTransaction().commit();
         session.close();

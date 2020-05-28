@@ -14,8 +14,8 @@ public class CarDao {
         this.session = session;
     }
 
-    public List<Car> getAllCars() {
-        Transaction transaction = session.getTransaction();
+    public List<Car> getAllCar() {
+        Transaction transaction = session.beginTransaction();
         List<Car> cars = session.createQuery("FROM Car").list();
         transaction.commit();
         session.close();
@@ -31,27 +31,18 @@ public class CarDao {
     }
 
     public void addCar(Car car) {
-        Transaction transaction = session.getTransaction();
+        Transaction transaction = session.beginTransaction();
         session.save(car);
         transaction.commit();
         session.close();
     }
 
-    public void deleteCar(Car car) {
-        session.beginTransaction();
-        session.delete(car);
-        session.getTransaction().commit();
-        session.close();
+    public void delCar(Car car) {
+
+
     }
 
-    public void deleteAllCars() {
-        session.beginTransaction();
-        session.createQuery("DELETE from Car").executeUpdate();
-        session.getTransaction().commit();
-        session.close();
-    }
-
-    public int countOFCars(String brand) {
+    public int count(String brand) {
         Transaction transaction = session.beginTransaction();
         int result = session.createQuery("FROM Car where brand = '" + brand + "'").list().size() + 1;
         transaction.commit();
@@ -59,13 +50,11 @@ public class CarDao {
         return result;
     }
 
-    public void delCar(Car car) {
+    public void delete() {
+        Transaction transaction = session.beginTransaction();
+        session.createQuery("DELETE FROM Car").executeUpdate();
+        transaction.commit();
+        session.close();
     }
-
-
-
-
-
-
 
 }
