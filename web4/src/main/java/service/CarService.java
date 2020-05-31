@@ -12,7 +12,7 @@ public class CarService {
 
     private static CarService carService;
 
-    private final SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     public CarService(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -44,7 +44,7 @@ public class CarService {
     public Car buyCar(Car car) {
         for (Car carOfBrand : new CarDao(sessionFactory.openSession()).getAllCarOfBrand(car.getBrand())) {
             if (carOfBrand.equals(car)) {
-                new CarDao(sessionFactory.openSession()).deleteCar(carOfBrand);
+                new CarDao(sessionFactory.openSession()).delCar(carOfBrand);
                 DailyReport.getInstance().setEarnings(carOfBrand.getPrice());
                 DailyReport.getInstance().setSoldCars();
                 return carOfBrand;

@@ -1,7 +1,6 @@
 package model;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "cars")
@@ -79,17 +78,20 @@ public class Car {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Car car = (Car) o;
-        return Objects.equals(id, car.id) &&
-                Objects.equals(brand, car.brand) &&
-                Objects.equals(model, car.model) &&
-                Objects.equals(licensePlate, car.licensePlate) &&
-                Objects.equals(price, car.price);
+
+        if (brand != null ? !brand.equals(car.brand) : car.brand != null) return false;
+        if (model != null ? !model.equals(car.model) : car.model != null) return false;
+        return licensePlate != null ? licensePlate.equals(car.licensePlate) : car.licensePlate == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, brand, model, licensePlate, price);
+        int result = brand != null ? brand.hashCode() : 0;
+        result = 31 * result + (model != null ? model.hashCode() : 0);
+        result = 31 * result + (licensePlate != null ? licensePlate.hashCode() : 0);
+        return result;
     }
 
     @Override
