@@ -3,6 +3,7 @@ package servlet;
 import com.google.gson.Gson;
 import model.Car;
 import service.CarService;
+import service.DailyReportService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +28,7 @@ public class CustomerServlet extends HttpServlet {
         String brand = req.getParameter("brand");
         String model = req.getParameter("model");
         String licensePlate = req.getParameter("licensePlate");
+
 
         Car car = CarService.getInstance().buyCar(new Car(brand, model, licensePlate, 0L));
 
