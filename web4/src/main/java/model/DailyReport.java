@@ -1,7 +1,5 @@
 package model;
 
-import org.hibernate.Session;
-
 import javax.persistence.*;
 
 @Entity
@@ -50,15 +48,19 @@ public class DailyReport {
     }
 
     public void setEarnings(Long earnings) {
-        this.earnings = earnings;
+        this.earnings += earnings;
     }
 
     public Long getSoldCars() {
         return soldCars;
     }
 
-    public void setSoldCars() {
+    public void setSoldCars(Long soldCars) {
         this.soldCars = soldCars;
+    }
+
+    public void setSoldCars() {
+        this.soldCars++;
     }
 
     public void delete() {

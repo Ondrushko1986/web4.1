@@ -15,6 +15,6 @@ public class NewDayServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         DailyReportService dailyReportService = DailyReportService.getInstance();
         dailyReportService.addDailyReport(DailyReport.getInstance());
-        dailyReportService.delete();
+        DailyReport.getInstance().delete();
     }
 }

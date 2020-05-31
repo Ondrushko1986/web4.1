@@ -36,6 +36,4 @@ public class DailyReportServlet extends HttpServlet {
         DailyReportService.getInstance().delete();
 
     }
-
-
 }

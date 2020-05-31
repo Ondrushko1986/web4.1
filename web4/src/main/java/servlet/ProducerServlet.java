@@ -13,16 +13,15 @@ public class ProducerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String brand = req.getParameter("brant");
+        String brand = req.getParameter("brand");
         String model = req.getParameter("model");
-        String licencePlate = req.getParameter("licencePlate");
+        String licensePlate = req.getParameter("licensePlate");
         Long price = Long.valueOf(req.getParameter("price"));
 
-        if (CarService.getInstance().addCar(new Car(brand, model, licencePlate, price))) {
+        if (CarService.getInstance().addCar(new Car(brand, model, licensePlate, price))) {
             resp.setStatus(HttpServletResponse.SC_OK);
         } else {
             resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
-
     }
 }

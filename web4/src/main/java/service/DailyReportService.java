@@ -28,18 +28,15 @@ public class DailyReportService {
         return new DailyReportDao(sessionFactory.openSession()).getAllDailyReport();
     }
 
-
     public DailyReport getLastReport() {
         return new DailyReportDao(sessionFactory.openSession()).getLastReport();
     }
 
-    public void addDailyReport (DailyReport dailyReport) {
+    public void addDailyReport(DailyReport dailyReport) {
         new DailyReportDao(sessionFactory.openSession()).addDailyReport(dailyReport);
     }
 
-    public void delete () {
+    public void delete() {
         new DailyReportDao(sessionFactory.openSession()).delete();
     }
-
-
 }
