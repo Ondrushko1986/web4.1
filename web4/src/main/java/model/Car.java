@@ -23,7 +23,7 @@ public class Car {
     @Column(name = "price")
     private Long price;
 
-    public Car() {
+    private Car() {
 
     }
 
@@ -75,34 +75,13 @@ public class Car {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Car car = (Car) o;
-
-        if (brand != null ? !brand.equals(car.brand) : car.brand != null) return false;
-        if (model != null ? !model.equals(car.model) : car.model != null) return false;
-        return licensePlate != null ? licensePlate.equals(car.licensePlate) : car.licensePlate == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = brand != null ? brand.hashCode() : 0;
-        result = 31 * result + (model != null ? model.hashCode() : 0);
-        result = 31 * result + (licensePlate != null ? licensePlate.hashCode() : 0);
-        return result;
-    }
-
-    @Override
     public String toString() {
-        return "Car{" +
+        return "CarDataSet{" +
                 "id=" + id +
-                ", brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
-                ", licensePlate='" + licensePlate + '\'' +
-                ", price=" + price +
-                '}';
+                ", brand= " + brand +
+                ", model= " + model +
+                ", plate= " + licensePlate +
+                ", price= " + price +
+                " } ";
     }
-
 }

@@ -1,7 +1,9 @@
 package service;
 
 import DAO.DailyReportDao;
+import model.Car;
 import model.DailyReport;
+import util.DayReportBuffer;
 import org.hibernate.SessionFactory;
 import util.DBHelper;
 
@@ -28,15 +30,21 @@ public class DailyReportService {
         return new DailyReportDao(sessionFactory.openSession()).getAllDailyReport();
     }
 
+
     public DailyReport getLastReport() {
         return new DailyReportDao(sessionFactory.openSession()).getLastReport();
     }
 
-    public void addDailyReport(DailyReport dailyReport) {
-        new DailyReportDao(sessionFactory.openSession()).addDailyReport(dailyReport);
+    public void addSoldCar(Car car) {
+        new DailyReportDao(sessionFactory.openSession()).addSoldCar(car);
     }
 
-    public void delete() {
-        new DailyReportDao(sessionFactory.openSession()).delete();
+    public void deleteAllReports() {
+        new DailyReportDao(sessionFactory.openSession()).deleteAllReport();
+    }
+
+    public void createNewDayReport() {
+        new DailyReportDao(sessionFactory.openSession()).createNewDayReport();
+        DayReportBuffer.getInstance().reset();
     }
 }

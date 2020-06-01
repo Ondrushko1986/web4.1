@@ -2,7 +2,6 @@ package service;
 
 import DAO.CarDao;
 import model.Car;
-import model.DailyReport;
 import org.hibernate.SessionFactory;
 import util.DBHelper;
 
@@ -14,7 +13,7 @@ public class CarService {
 
     private SessionFactory sessionFactory;
 
-    public CarService(SessionFactory sessionFactory) {
+    private CarService(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
@@ -26,38 +25,38 @@ public class CarService {
     }
 
     public List<Car> getAllCars() {
-        return new CarDao(sessionFactory.openSession()).getAllCar();
+        List<Car> list = null;
+        CarDao dao = new CarDao(sessionFactory.openSession());
+        list = dao.getAllCar();
+        return list;
     }
 
-    public List<Car> getAllCarOfBrand(String brand) {
-        return new CarDao(sessionFactory.openSession()).getAllCarOfBrand(brand);
-    }
-
-    public boolean addCar(Car car) {
-        if (count(car.getBrand()) <= 10) {
-            new CarDao(sessionFactory.openSession()).addCar(car);
-            return true;
+    public int getNumberBrand(String brand) {
+        List<Car> list = null;
+        int number = 0;
+        CarDao dao = new CarDao(sessionFactory.openSession());
+        list = dao.getCarByBrand(brand);
+        if (list != null) {
+            number = list.size();
         }
-        return false;
+        return number;
     }
 
-    public Car buyCar(Car car) {
-        for (Car carOfBrand : new CarDao(sessionFactory.openSession()).getAllCarOfBrand(car.getBrand())) {
-            if (carOfBrand.equals(car)) {
-                new CarDao(sessionFactory.openSession()).delCar(carOfBrand);
-                DailyReport.getInstance().setEarnings(carOfBrand.getPrice());
-                DailyReport.getInstance().setSoldCars();
-                return carOfBrand;
-            }
-        }
-        return null;
+    public void addCar(Car car) {
+        CarDao dao = new CarDao(sessionFactory.openSession());
+        dao.addCar(car);
     }
 
-    public int count(String brand) {
-        return new CarDao(sessionFactory.openSession()).count(brand);
+    public Car getCarByParametr(String brand, String model, String number) {
+        CarDao dao = new CarDao(sessionFactory.openSession());
+        return dao.getCarByParametr(brand, model, number);
     }
 
-    public void delete() {
-        new CarDao(sessionFactory.openSession()).delete();
+    public void deleteCar(Car car) {
+        new CarDao(sessionFactory.openSession()).deleteCar(car);
+    }
+
+    public void deleteAllCar() {
+        new CarDao(sessionFactory.openSession()).deleteAllCars();
     }
 }

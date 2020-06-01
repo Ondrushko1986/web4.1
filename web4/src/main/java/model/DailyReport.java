@@ -1,19 +1,12 @@
 package model;
 
+import org.hibernate.Session;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "daily_reports")
 public class DailyReport {
-
-    private static DailyReport dailyReport;
-
-    public static DailyReport getInstance() {
-        if (dailyReport == null) {
-            dailyReport = new DailyReport(0L, 0L);
-        }
-        return dailyReport;
-    }
 
     @Id
     @Column(name = "id")
@@ -48,7 +41,7 @@ public class DailyReport {
     }
 
     public void setEarnings(Long earnings) {
-        this.earnings += earnings;
+        this.earnings = earnings;
     }
 
     public Long getSoldCars() {
@@ -59,11 +52,12 @@ public class DailyReport {
         this.soldCars = soldCars;
     }
 
-    public void setSoldCars() {
-        this.soldCars++;
-    }
-
-    public void delete() {
-        dailyReport = null;
+    @Override
+    public String toString() {
+        return "DailyReport{" +
+                "id=" + id +
+                ", earnings= " + earnings +
+                ", soldCars= " + soldCars +
+                " } ";
     }
 }

@@ -13,27 +13,48 @@ import java.io.IOException;
 
 public class DailyReportServlet extends HttpServlet {
 
+    //    @Override
+//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        Gson gson = new Gson();
+//        String json = null;
+//
+//        if (req.getPathInfo().contains("all")) {
+//            json = gson.toJson(DailyReportService.getInstance().getAllDailyReports());
+//        } else if (req.getPathInfo().contains("last")) {
+//            json = gson.toJson(DailyReportService.getInstance().getLastReport());
+//        }
+//
+//        resp.getWriter().println(json);
+//        resp.setContentType("text/html;charset=utf-8");
+//        resp.setStatus(HttpServletResponse.SC_OK);
+//    }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Gson gson = new Gson();
-        String json = null;
-
         if (req.getPathInfo().contains("all")) {
-            json = gson.toJson(DailyReportService.getInstance().getAllDailyReports());
+            Gson gson = new Gson();
+            String json = gson.toJson(DailyReportService.getInstance().getAllDailyReports());
+            resp.setStatus(200);
+            resp.getWriter().write(json);
         } else if (req.getPathInfo().contains("last")) {
-            json = gson.toJson(DailyReportService.getInstance().getLastReport());
+            Gson gson = new Gson();
+            String json = gson.toJson(DailyReportService.getInstance().getLastReport());
+            resp.setStatus(200);
+            resp.getWriter().write(json);
         }
 
-        resp.getWriter().println(json);
-        resp.setContentType("text/html;charset=utf-8");
-        resp.setStatus(HttpServletResponse.SC_OK);
     }
+
+//    @Override
+//    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        CarService.getInstance().delete();
+//        DailyReport.getInstance().delete();
+//        DailyReportService.getInstance().delete();
+//
+//    }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CarService.getInstance().delete();
-        DailyReport.getInstance().delete();
-        DailyReportService.getInstance().delete();
-
+        DailyReportService.getInstance().deleteAllReports();
+        CarService.getInstance().deleteAllCar();
     }
 }

@@ -9,19 +9,39 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ProducerServlet extends HttpServlet {
+//    @Override
+//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        String brand = req.getParameter("brand");
+//        String model = req.getParameter("model");
+//        String licensePlate = req.getParameter("licensePlate");
+//        Long price = Long.valueOf(req.getParameter("price"));
+//
+//        if (CarService.getInstance().addCar(new Car(brand, model, licensePlate, price))) {
+//            resp.setStatus(HttpServletResponse.SC_OK);
+//        } else {
+//            resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
+//        }
+//    }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String brand = req.getParameter("brand");
-        String model = req.getParameter("model");
-        String licensePlate = req.getParameter("licensePlate");
-        Long price = Long.valueOf(req.getParameter("price"));
+    public class ProducerServlet extends HttpServlet {
 
-        if (CarService.getInstance().addCar(new Car(brand, model, licensePlate, price))) {
-            resp.setStatus(HttpServletResponse.SC_OK);
-        } else {
-            resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        @Override
+        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+            resp.setStatus(403);
+            String brand = req.getParameter("brand");
+            String model = req.getParameter("model");
+            String licensePlate = req.getParameter("licensePlate");
+            String priceStr = req.getParameter("price");
+
+            if (!brand.equals("") || !model.equals("") || !licensePlate.equals("") || !priceStr.equals("")) {
+                Long price = Long.valueOf(priceStr);
+                CarService service = CarService.getInstance();
+                if (service.getNumberBrand(brand) <= 10) {
+                    Car car = new Car(brand, model, licensePlate, price);
+                    service.addCar(car);
+                    resp.setStatus(200);
+                }
+            }
         }
     }
-}
+
